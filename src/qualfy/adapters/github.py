@@ -36,8 +36,11 @@ class GitHubClient:
     def __init__(self, options: GitHubOptions, transport: httpx.AsyncBaseTransport | None = None):
         self.owner, self.repo = options.owner, options.repo
         self.key_prefix = options.key_prefix or options.repo
+        # Paths are joined onto the repo URL by hand: httpx would add a trailing slash to the
+        # bare repo URL for get_repo(), and GitHub answers that with 404.
+        self._repo_path = f"/repos/{options.owner}/{options.repo}"
         self._client = httpx.AsyncClient(
-            base_url=f"{options.base_url.rstrip('/')}/repos/{options.owner}/{options.repo}",
+            base_url=options.base_url,
             headers={
                 "Authorization": f"Bearer {Secret.reveal(options.token)}",
                 "Accept": "application/vnd.github+json",
@@ -106,7 +109,7 @@ class GitHubClient:
 
     async def _request(self, method: str, url: str, **kwargs: Any) -> Any:
         try:
-            response = await self._client.request(method, url, **kwargs)
+            response = await self._client.request(method, self._repo_path + url, **kwargs)
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             raise SourceError(

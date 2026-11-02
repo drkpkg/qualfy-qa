@@ -8,8 +8,12 @@ from qualfy.cli.scaffold import create_project
 from qualfy.core.config import load_config
 
 
-def mock(status, payload):
-    return httpx.MockTransport(lambda request: httpx.Response(status, json=payload))
+def mock(status, payload, path=None):
+    def handler(request):
+        if path and request.url.path != path:
+            return httpx.Response(404, json={"message": "Not Found"})
+        return httpx.Response(status, json=payload)
+    return httpx.MockTransport(handler)
 
 
 def test_parse_remote():
@@ -20,7 +24,7 @@ def test_parse_remote():
 
 async def test_verify_github_and_jira():
     ok = await connect.verify_github("acme", "e2e", "t", mock(200, {
-        "private": True, "permissions": {"push": True}}))
+        "private": True, "permissions": {"push": True}}, path="/repos/acme/e2e"))
     assert ok.ok and ok.detail == "private, write access"
     bad = await connect.verify_github("acme", "e2e", "t", mock(404, {"message": "Not Found"}))
     assert not bad.ok and "404" in bad.detail

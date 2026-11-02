@@ -1,3 +1,10 @@
+qualfy-qa (0.1.1-1) unstable; urgency=medium
+
+  * Fix `qualfy connect` reporting 404 for existing GitHub repositories: the
+    repository check requested the repo URL with a trailing slash.
+
+ -- Felix Daniel Coca Calvimontes <daniel.uremix@gmail.com>  Mon, 02 Nov 2026 18:27:37 -0400
+
 qualfy-qa (0.1.0-1) unstable; urgency=medium
 
   * Initial release.

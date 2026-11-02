@@ -27,7 +27,7 @@ yay -S qualfy-qa        # or: paru -S qualfy-qa
 Or the prebuilt package from a release:
 
 ```bash
-sudo pacman -U ./qualfy-qa-0.1.0-1-any.pkg.tar.zst
+sudo pacman -U ./qualfy-qa-0.1.1-1-any.pkg.tar.zst
 ```
 
 Optional extras: `sudo pacman -S --asdeps python-keyring github-cli nodejs npm git`.
@@ -37,7 +37,7 @@ Optional extras: `sudo pacman -S --asdeps python-keyring github-cli nodejs npm g
 One `.deb` works on 24.04 (noble), 25.04 (plucky), 25.10 (questing) and 26.04 (resolute):
 
 ```bash
-sudo apt install ./qualfy-qa_0.1.0-1_all.deb
+sudo apt install ./qualfy-qa_0.1.1-1_all.deb
 ```
 
 Use `apt install ./file.deb` (not `dpkg -i`) so the dependencies are pulled in. It depends on
