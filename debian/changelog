@@ -1,3 +1,10 @@
+qualfy-qa (0.1.2-1) unstable; urgency=medium
+
+  * Fix `qualfy classify` failing the first write-back with "Event loop is
+    closed": fetch and write-back now share one event loop.
+
+ -- Felix Daniel Coca Calvimontes <daniel.uremix@gmail.com>  Mon, 02 Nov 2026 18:50:53 -0400
+
 qualfy-qa (0.1.1-1) unstable; urgency=medium
 
   * Fix `qualfy connect` reporting 404 for existing GitHub repositories: the

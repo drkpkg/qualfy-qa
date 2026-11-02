@@ -26,7 +26,7 @@ def run(project_dir, monkeypatch):
 def test_version(capsys):
     with pytest.raises(SystemExit):
         cli.main(["--version"])
-    assert "qualfy 0.1.1" in capsys.readouterr().out
+    assert "qualfy 0.1.2" in capsys.readouterr().out
 
 
 def test_list_ingest_run_runs(run):

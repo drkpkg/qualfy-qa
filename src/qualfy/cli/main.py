@@ -76,12 +76,17 @@ def cmd_connect(args: argparse.Namespace) -> int:
 
 
 def cmd_classify(args: argparse.Namespace) -> int:
+    return _run(_classify(_service(args), args))
+
+
+async def _classify(service: AutomationService, args: argparse.Namespace) -> int:
+    # One event loop for fetch and write-back: the source's httpx pool is bound to the loop
+    # that opened it, so a second asyncio.run() fails its first request on a reused connection.
     from qualfy.core import triage
 
-    service = _service(args)
     with console.status("Fetching and classifying tickets…"):
-        items = _run(triage.classify(service, args.project, classifier=args.classifier,
-                                     limit=args.limit, force=args.force))
+        items = await triage.classify(service, args.project, classifier=args.classifier,
+                                      limit=args.limit, force=args.force)
     if not items:
         console.print("[dim]No open tickets.[/]")
         return 0
@@ -103,7 +108,7 @@ def cmd_classify(args: argparse.Namespace) -> int:
                                     choices=[u.value for u in Urgency],
                                     default=item.classification.urgency.value, console=console)
                 item.classification.urgency = Urgency(picked)
-    outcome = _run(triage.apply(service, changes, args.project))
+    outcome = await triage.apply(service, changes, args.project)
     for key, error in outcome.items():
         console.print(f"[red]✗ {key}: {error}[/]" if error else f"[green]✓[/] {key}")
     return 1 if any(outcome.values()) else 0

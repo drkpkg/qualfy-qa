@@ -1,6 +1,6 @@
 # Maintainer: Felix Daniel Coca Calvimontes <daniel.uremix@gmail.com>
 pkgname=qualfy-qa
-pkgver=0.1.1
+pkgver=0.1.2
 pkgrel=1
 pkgdesc="Turn reviewed test tickets into automated Playwright tests with Claude Code"
 arch=('any')
@@ -31,7 +31,7 @@ optdepends=(
   'claude-code: AI agent that writes the tests (AUR, or npm i -g @anthropic-ai/claude-code)'
 )
 source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('a937dacab843bba7af9d5526774b0ca158100c3b12fe845cd1b9401b575bebdd')
+sha256sums=('SKIP')
 
 build() {
   cd "$pkgname-$pkgver"
