@@ -6,7 +6,7 @@
 
 <p align="center">
   Turn reviewed test tickets into automated Playwright tests with Claude Code.<br>
-  Works with GitHub Issues, Jira + Rovo and local specs. Packaged for Arch Linux and Ubuntu 24.04 to 26.04, so you don't need a venv.
+  Works with GitHub, Jira and local specs.
 </p>
 
 Someone (Rovo, a teammate or Claude) turns a spec ticket into a test ticket. `qualfy` reads that
