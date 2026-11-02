@@ -1,0 +1,27 @@
+pkgbase = qualfy-qa
+	pkgdesc = Turn reviewed test tickets into automated Playwright tests with Claude Code
+	pkgver = 0.1.0
+	pkgrel = 1
+	url = https://github.com/drkpkg/qualfy-qa
+	arch = any
+	license = MIT
+	checkdepends = python-pytest
+	checkdepends = python-pytest-asyncio
+	makedepends = python-build
+	makedepends = python-installer
+	makedepends = python-hatchling
+	depends = python
+	depends = python-yaml
+	depends = python-httpx
+	depends = python-rich
+	depends = python-textual
+	optdepends = python-keyring: store API tokens in the system keyring
+	optdepends = git: commit generated tests
+	optdepends = github-cli: GitHub issues/PR integration (gh)
+	optdepends = nodejs: run Playwright test projects
+	optdepends = npm: install Playwright test project dependencies
+	optdepends = claude-code: AI agent that writes the tests (AUR, or npm i -g @anthropic-ai/claude-code)
+	source = qualfy-qa-0.1.0.tar.gz::https://github.com/drkpkg/qualfy-qa/archive/refs/tags/v0.1.0.tar.gz
+	sha256sums = SKIP
+
+pkgname = qualfy-qa

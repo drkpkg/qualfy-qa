@@ -1,0 +1,53 @@
+# Maintainer: Felix Daniel Coca Calvimontes <daniel.uremix@gmail.com>
+pkgname=qualfy-qa
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Turn reviewed test tickets into automated Playwright tests with Claude Code"
+arch=('any')
+url="https://github.com/drkpkg/qualfy-qa"
+license=('MIT')
+depends=(
+  'python'
+  'python-yaml'
+  'python-httpx'
+  'python-rich'
+  'python-textual'
+)
+makedepends=(
+  'python-build'
+  'python-installer'
+  'python-hatchling'
+)
+checkdepends=(
+  'python-pytest'
+  'python-pytest-asyncio'
+)
+optdepends=(
+  'python-keyring: store API tokens in the system keyring'
+  'git: commit generated tests'
+  'github-cli: GitHub issues/PR integration (gh)'
+  'nodejs: run Playwright test projects'
+  'npm: install Playwright test project dependencies'
+  'claude-code: AI agent that writes the tests (AUR, or npm i -g @anthropic-ai/claude-code)'
+)
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+# Replace with the real checksum after tagging: `updpkgsums`
+sha256sums=('SKIP')
+
+build() {
+  cd "$pkgname-$pkgver"
+  python -m build --wheel --no-isolation
+}
+
+check() {
+  cd "$pkgname-$pkgver"
+  # Tests are offline: HTTP is mocked with httpx.MockTransport and `claude` is a fake script.
+  PYTHONPATH="$PWD/src" python -m pytest -q -p no:cacheprovider tests
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+  python -m installer --destdir="$pkgdir" dist/*.whl
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
+}

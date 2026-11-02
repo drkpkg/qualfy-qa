@@ -1,0 +1,110 @@
+Screen {
+    background: $background;
+}
+
+.section {
+    color: $text-muted;
+    text-style: bold;
+    padding: 1 1 0 1;
+}
+
+#main, #history-main {
+    height: 1fr;
+}
+
+#sidebar {
+    width: 32;
+    border-right: tall $panel;
+}
+
+#project {
+    margin: 0 1;
+}
+
+#specs {
+    height: 1fr;
+    margin: 0 1 1 1;
+    border: round $panel;
+}
+
+#specs:focus {
+    border: round $accent;
+}
+
+#detail {
+    width: 1fr;
+    padding: 0 1;
+}
+
+#spec-title {
+    padding: 1 0;
+    height: auto;
+}
+
+#cases {
+    height: 1fr;
+    max-height: 50%;
+    border: round $panel;
+}
+
+#cases:focus {
+    border: round $accent;
+}
+
+#case-detail {
+    height: 1fr;
+    border: round $panel;
+    padding: 0 1;
+    overflow-y: auto;
+}
+
+#activity {
+    width: 1fr;
+    border-left: tall $panel;
+}
+
+#log {
+    height: 1fr;
+    margin: 0 1;
+    border: round $panel;
+    background: $surface;
+}
+
+#status {
+    height: 1;
+    margin: 0 1 1 1;
+    padding: 0 1;
+    background: $panel;
+    color: $text-muted;
+}
+
+#status.running {
+    background: $primary;
+    color: $text;
+}
+
+#status.success {
+    background: $success;
+    color: $text;
+}
+
+#status.partial, #status.skipped {
+    background: $warning;
+    color: $text;
+}
+
+#status.failed, #status.error {
+    background: $error;
+    color: $text;
+}
+
+#runs {
+    width: 1fr;
+    border: round $panel;
+}
+
+#run-detail {
+    width: 1fr;
+    border: round $panel;
+    background: $surface;
+}

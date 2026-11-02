@@ -1,0 +1,48 @@
+Source: qualfy-qa
+Section: devel
+Priority: optional
+Maintainer: Felix Daniel Coca Calvimontes <daniel.uremix@gmail.com>
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-sequence-python3,
+ pybuild-plugin-pyproject,
+ python3-all (>= 3.12),
+ python3-hatchling (>= 1.21),
+ python3-yaml <!nocheck>,
+ python3-httpx <!nocheck>,
+ python3-rich <!nocheck>,
+ python3-pytest <!nocheck>,
+ python3-pytest-asyncio <!nocheck>,
+Standards-Version: 4.7.0
+Homepage: https://github.com/drkpkg/qualfy-qa
+Vcs-Browser: https://github.com/drkpkg/qualfy-qa
+Vcs-Git: https://github.com/drkpkg/qualfy-qa.git
+Rules-Requires-Root: no
+X-Python3-Version: >= 3.12
+
+Package: qualfy-qa
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+ python3 (>= 3.12),
+ python3-yaml (>= 6.0.1),
+ python3-httpx (>= 0.26),
+ python3-rich (>= 13.7),
+Recommends:
+ python3-textual (>= 2.1),
+ python3-keyring,
+ git,
+Suggests:
+ gh,
+ nodejs,
+ npm,
+Description: turn reviewed test tickets into automated Playwright tests
+ qualfy reads reviewed test tickets (markdown files, Jira, GitHub issues),
+ validates them against a YAML contract, and hands them to an AI agent
+ (Claude Code) that writes and runs Playwright tests in the target
+ repository. Results are reported back as JSON files or ticket comments.
+ .
+ The interactive TUI needs python3-textual 2.1 or newer (Ubuntu 25.04+);
+ without it qualfy falls back to plain prompts. The Claude Code CLI
+ (`claude`) is not packaged and must be installed separately.

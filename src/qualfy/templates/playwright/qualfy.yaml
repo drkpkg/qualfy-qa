@@ -1,0 +1,42 @@
+# qualfy configuration. ${VAR} reads the environment, ${secret:name} the keyring.
+# Run `qualfy connect` to link GitHub or Jira; it rewrites the sources/sinks/hosts below.
+name: __PROJECT_SLUG__
+workspace: .qualfy
+sources:
+  local:
+    kind: markdown
+    options:
+      path: specs
+sinks:
+  results:
+    kind: json-file
+    options:
+      path: .qualfy/results
+agents:
+  claude:
+    kind: claude-code
+    options:
+      workdir: .
+      git: branch
+      max_budget_usd: 5
+      mcp_config: .mcp.json
+analyzers:
+  claude:
+    kind: claude
+    options:
+      workdir: .
+  static:
+    kind: static
+classifiers:
+  rules:
+    kind: rules
+  claude:
+    kind: claude
+projects:
+  default:
+    source: local
+    agent: claude
+    analyzer: claude
+    classifier: rules
+    sinks: [results]
+    framework: playwright

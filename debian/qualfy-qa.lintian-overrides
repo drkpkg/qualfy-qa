@@ -1,0 +1,2 @@
+# Scaffold templates for target test repos; .claude/ is Claude Code's project config dir.
+qualfy-qa: package-contains-python-dot-directory [usr/lib/python3/dist-packages/qualfy/templates/*]

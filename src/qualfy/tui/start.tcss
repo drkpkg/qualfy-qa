@@ -1,0 +1,113 @@
+Screen {
+    background: $background;
+}
+
+#steps {
+    height: 1fr;
+}
+
+#steps > * {
+    padding: 1 2;
+}
+
+.section {
+    color: $accent;
+    text-style: bold;
+    margin: 1 0 0 0;
+}
+
+#analyze {
+    align: center middle;
+}
+
+#analyze LoadingIndicator {
+    height: 3;
+    color: $accent;
+}
+
+#analyze-msg {
+    width: auto;
+    margin-top: 1;
+    color: $text-muted;
+}
+
+#analysis {
+    margin: 1 0;
+    padding: 0 1;
+    border-left: tall $accent;
+}
+
+#questions {
+    height: auto;
+}
+
+.actions {
+    height: auto;
+    margin-top: 1;
+    align-horizontal: right;
+}
+
+.actions Button {
+    margin-left: 2;
+}
+
+#log {
+    height: 1fr;
+    border: round $panel;
+    background: $surface;
+}
+
+#run-status {
+    height: 1;
+    margin-top: 1;
+    padding: 0 1;
+    background: $secondary;
+}
+
+#results {
+    height: auto;
+    max-height: 45%;
+}
+
+#drafts {
+    height: 1fr;
+}
+
+#drafts TextArea {
+    height: 1fr;
+}
+
+ConfirmScreen {
+    align: center middle;
+    background: $background 60%;
+}
+
+#dialog {
+    width: 90;
+    max-width: 95%;
+    height: auto;
+    max-height: 85%;
+    padding: 1 2;
+    border: thick $primary;
+    background: $surface;
+}
+
+#dialog-title {
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+#dialog-body {
+    height: auto;
+    max-height: 30;
+}
+
+#dialog-buttons {
+    height: auto;
+    margin-top: 1;
+    align-horizontal: right;
+}
+
+#dialog-buttons Button {
+    margin-left: 2;
+}

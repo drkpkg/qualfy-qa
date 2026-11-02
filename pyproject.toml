@@ -1,0 +1,63 @@
+[project]
+name = "qualfy-qa"
+version = "0.1.0"
+description = "Turn reviewed test tickets into automated Playwright tests with Claude Code"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+authors = [{ name = "Felix Daniel Coca Calvimontes" }]
+keywords = ["qa", "testing", "playwright", "claude", "jira", "github"]
+classifiers = [
+    "Environment :: Console",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Testing",
+]
+# Lower bounds match Ubuntu 24.04 (noble) system packages so distro builds need no venv.
+dependencies = [
+    "PyYAML>=6.0.1",
+    "httpx>=0.26",
+    "rich>=13.7",
+]
+
+[project.optional-dependencies]
+tui = ["textual>=2.1"]
+keyring = ["keyring>=24"]
+
+[project.urls]
+Homepage = "https://github.com/drkpkg/qualfy-qa"
+Issues = "https://github.com/drkpkg/qualfy-qa/issues"
+
+[project.scripts]
+qualfy = "qualfy.cli.main:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=7.4",
+    "pytest-asyncio>=0.20",
+    "ruff>=0.5",
+    "textual>=2.1",
+]
+
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/qualfy"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/qualfy", "tests", "README.md", "LICENSE", "packaging", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "ASYNC"]
+ignore = ["ASYNC240"]  # local spec files are tiny; blocking reads are fine

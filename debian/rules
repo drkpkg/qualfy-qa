@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+
+export PYBUILD_NAME=qualfy
+export PYBUILD_SYSTEM=pyproject
+# Run the tests from the source tree against the built copy (PYTHONPATH=build dir), so
+# pytest picks up [tool.pytest.ini_options] (asyncio_mode = "auto") from pyproject.toml.
+export PYBUILD_TEST_PYTEST=1
+export PYBUILD_TEST_ARGS=-q -p no:cacheprovider {dir}/tests
+
+%:
+	dh $@ --buildsystem=pybuild

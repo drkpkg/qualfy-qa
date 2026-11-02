@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+      - run: uv run --locked --only-group dev ruff check .
+
+  test:
+    name: test (uv, Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.12", "3.14"]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python }}
+      - run: uv sync --locked
+      - run: uv run pytest -q
+
+  # The suite against distro-shipped packages only (no venv, no pip): this is what users of
+  # the .deb / Arch package actually run. Textual tests must skip when textual is absent/too old.
+  distro:
+    name: distro (${{ matrix.name }})
+    runs-on: ubuntu-latest
+    container: ${{ matrix.image }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: ubuntu 24.04, no textual
+            image: ubuntu:24.04
+            install: >-
+              apt-get update &&
+              apt-get install -y --no-install-recommends
+              python3 python3-yaml python3-httpx python3-rich python3-keyring
+              python3-pytest python3-pytest-asyncio git
+          - name: ubuntu 26.04, textual
+            image: ubuntu:26.04
+            install: >-
+              apt-get update &&
+              apt-get install -y --no-install-recommends
+              python3 python3-yaml python3-httpx python3-rich python3-keyring python3-textual
+              python3-pytest python3-pytest-asyncio git
+          - name: archlinux, textual
+            image: archlinux:latest
+            install: >-
+              pacman -Syu --noconfirm --needed
+              python python-yaml python-httpx python-rich python-keyring python-textual
+              python-pytest python-pytest-asyncio git
+    env:
+      DEBIAN_FRONTEND: noninteractive
+      PYTHONPATH: src
+    steps:
+      - name: Install system packages
+        run: ${{ matrix.install }}
+      - uses: actions/checkout@v5
+      - name: Versions
+        run: |
+          python3 --version
+          python3 - <<'PY'
+          from importlib.metadata import version, PackageNotFoundError
+          for d in ("PyYAML", "httpx", "rich", "textual", "keyring", "pytest", "pytest-asyncio"):
+              try:
+                  print(f"{d:16} {version(d)}")
+              except PackageNotFoundError:
+                  print(f"{d:16} -")
+          PY
+      - name: Test
+        run: python3 -m pytest -q -p no:cacheprovider -rs
