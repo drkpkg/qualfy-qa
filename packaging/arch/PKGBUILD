@@ -31,8 +31,7 @@ optdepends=(
   'claude-code: AI agent that writes the tests (AUR, or npm i -g @anthropic-ai/claude-code)'
 )
 source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
-# Replace with the real checksum after tagging: `updpkgsums`
-sha256sums=('SKIP')
+sha256sums=('f5ee3b115cab5ea7c42a427912882eee262c793489accabef73c5cb12b693c25')
 
 build() {
   cd "$pkgname-$pkgver"
