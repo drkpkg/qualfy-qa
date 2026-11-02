@@ -22,6 +22,6 @@ pkgbase = qualfy-qa
 	optdepends = npm: install Playwright test project dependencies
 	optdepends = claude-code: AI agent that writes the tests (AUR, or npm i -g @anthropic-ai/claude-code)
 	source = qualfy-qa-0.1.1.tar.gz::https://github.com/drkpkg/qualfy-qa/archive/refs/tags/v0.1.1.tar.gz
-	sha256sums = SKIP
+	sha256sums = a937dacab843bba7af9d5526774b0ca158100c3b12fe845cd1b9401b575bebdd
 
 pkgname = qualfy-qa

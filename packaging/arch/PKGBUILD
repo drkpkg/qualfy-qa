@@ -31,7 +31,7 @@ optdepends=(
   'claude-code: AI agent that writes the tests (AUR, or npm i -g @anthropic-ai/claude-code)'
 )
 source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('SKIP')
+sha256sums=('a937dacab843bba7af9d5526774b0ca158100c3b12fe845cd1b9401b575bebdd')
 
 build() {
   cd "$pkgname-$pkgver"
